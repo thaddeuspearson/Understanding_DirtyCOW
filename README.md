@@ -159,7 +159,7 @@ int main()
 {
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need to know the file size) */
+  /* get the file status, to learn the file size */
   fstat(file_desc, &st);
   
   /* map the file to memory, in read-only and private mode */
@@ -297,7 +297,7 @@ int main()
 {
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need to know the file size) */
+  /* get the file status, to learn the file size */
   fstat(file_desc, &st);
   
   /* map the file to memory, in read-only and private mode */
@@ -324,7 +324,7 @@ int main()
 ```c
 /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need to know the file size) */
+  /* get the file status, to learn the file size */
   fstat(file_desc, &st);
 ```
 
@@ -385,7 +385,7 @@ pthread_create(&madvise_thr, NULL, madvise_helper, NULL);
 
 <br>
 
-At this point, this vulnerability has been well-documented, and the Linux Kernel has been patched. Every version since 4.8.3 actvely checks if a memory page being processed because it had been modified (*or dirty...*) had a previously deallocated copy that existed. If a previously deallocated copy is detected, the data is not written, and thus fixes the vulnerability.
+At this point, this vulnerability has been well-documented, and the Linux Kernel has been patched. Every version since 4.8.3 actively checks if a memory page being processed because it had been modified (*or dirty...*) had a previously deallocated copy that existed. If a previously deallocated copy is detected, the data is not written, and thus fixes the vulnerability.
 
 <br>
 
