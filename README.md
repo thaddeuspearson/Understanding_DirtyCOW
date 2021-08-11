@@ -39,7 +39,7 @@ In Linux, there is a file called `/etc/passwd` where all user accounts are liste
 
 By default, the `/etc/passwd` file is given the permission string that allows only the root user to write to it. The rest of the world can only read this particular file; they cannot write to it. This is a security mechanism, as the only account that should be able to add new users to the system, or reassign UIDs is the root user.
 
-If, for some reason, a user account were able to modify it's UID to the number 0, the Linux Kernel would then mistakenly think that the user is actually the root user, and therefore able to do anything on the system. It is in this way that the dirtyCOW vulnerability can be used by an attacker to elevate their priviledges to the root user, and what makes this vulnerability so dangerous.
+If, for some reason, a user account were able to modify it's UID to the number 0, the Linux Kernel would then mistakenly think that the user is actually the root user, and therefore able to do anything on the system. It is in this way that the DirtyCOW vulnerability can be used by an attacker to elevate their priviledges to the root user, and what makes this vulnerability so dangerous.
 
 <br>
 
