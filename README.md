@@ -159,7 +159,7 @@ int main()
 {
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need size) */
+  /* get file status (we need to know the file size) */
   fstat(file_desc, &st);
   
   /* map the file to memory, in read-only and private mode */
@@ -297,7 +297,7 @@ int main()
 {
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need size) */
+  /* get file status (we need to know the file size) */
   fstat(file_desc, &st);
   
   /* map the file to memory, in read-only and private mode */
@@ -324,7 +324,7 @@ int main()
 ```c
 /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
-  /* get file status (we need the size) */
+  /* get file status (we need to know the file size) */
   fstat(file_desc, &st);
 ```
 
