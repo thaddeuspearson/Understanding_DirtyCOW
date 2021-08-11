@@ -399,6 +399,11 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     ```
     sudo adduser userx
     ```
+    
+<details><summary>Togle for Screenshot</summary>
+    ![adduser](pictures/adduser.png)
+</details>
+
 &nbsp;
 
 2. to prove that userx is not root, use the tail command to see the last entry of /etc/passwd, notice the UID is something else other than 0000 (*which would be root*):
