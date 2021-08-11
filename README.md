@@ -400,11 +400,11 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     sudo adduser userx
     ```
     
-<details><summary>Togle for Screenshot</summary>
+    <details><summary>Toggle for Screenshot</summary>
     
-![adduser](pictures/adduser.png)
+    ![adduser](pictures/adduser.png)
 
-</details>
+    </details>
 
 &nbsp;
 
