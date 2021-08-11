@@ -434,7 +434,7 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     You can verify that you have to correct offset by using the dd command and ensuring that you only see the UID as the response (*be sure to set the 'skip=' to the number you calculated above*):
 
     ```
-    $ dd if=/etc/passwd bs=1 count=4 status=none skip=2296
+    dd if=/etc/passwd bs=1 count=4 status=none skip=2296
     ```
 
 &nbsp;
