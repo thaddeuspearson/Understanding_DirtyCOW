@@ -401,7 +401,9 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     ```
     
 <details><summary>Togle for Screenshot</summary>
-    ![adduser](pictures/adduser.png)
+    
+![adduser](pictures/adduser.png)
+
 </details>
 
 &nbsp;
