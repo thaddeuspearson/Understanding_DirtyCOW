@@ -414,6 +414,13 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     tail -n 1 /etc/passwd
     ```
 
+    <details><summary>Toggle for Screenshot</summary>
+    
+    ![tail_command](pictures/tail.png)
+
+    </details>
+    
+    
 &nbsp;
 
 3. We need to calculate the offset of the UID that is listed from the output generated from the command above.  We will use the `cat` command piped to the `grep` command to figure this out. (*If you created a different username replace 'userx' below with your username*):
@@ -422,6 +429,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     cat /etc/passwd | grep -b userx
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![calculate_bytes](pictures/calculate_bytes.png)
+
+    </details>
+    
 &nbsp;
 
 4. The output of this command gave us the number of bytes that occur before the specific entry for userx in /etc/passwd. The specific bytes we are interested in are the 4 bytes that are located in the position of the UID. If we could change those to '0000' then our user will trick the system into becoming root. The output generated from the previous command for me was:
@@ -430,6 +443,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     2288:userx:x:1001:1001:,,,:/home/userx:/bin/bash
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![calculate_bytes](pictures/calculate_bytes.png)
+
+    </details>
+    
 &nbsp;
 
 5. Looking at the output you got from the previous command, remember the number that appears at the beginning of the line and count the number of characters that exist from the begining of the username, up to the second colon `:`. Add this count to the number that appeared at the beginning of the line. This will be your `TARGET_OFFSET`. For me, there were only 8 total characters: `userx:x:`
@@ -444,6 +463,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     dd if=/etc/passwd bs=1 count=4 status=none skip=2296
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![verify_offset](pictures/verify_offset.png)
+
+    </details>
+    
 &nbsp;
 
 6. Open the `exploit.c` script you downloaded onto your VM in the text editor of youf choice. I used `nano` to do this. Make sure you are in the same directory as the exploit.c script, or provide the full filepath to be able to edit it in this way. (*if you use another text editor, be sure to save the file as 'exploit.c' after you are done editing it*)
@@ -451,6 +476,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     ```
     nano exploit.c
     ```
+    
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![nano_exploitc](pictures/nano_exploitc.png)
+
+    </details>
 
 &nbsp;
 
@@ -472,6 +503,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
 
     **Be sure to save your file as `exploit.c`**
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![set_variables](pictures/set_variables.png)
+
+    </details>
+    
 &nbsp;
 
 8. Time to complie the code. Using the gcc complier, you will create a new binary, called `exploit` that you will be able to execute. Make sure you are in the same directory as the exploit.c script, or provide the full filepath to be able to edit it in this way.
@@ -480,6 +517,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     gcc -o exploit exploit.c -lpthread
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![compile_exploit](pictures/compile_exploit.png)
+
+    </details>
+    
 &nbsp;
 
 9. You should now have a new binary called `exploit` in your current directory. When you are ready, execute the script and let it run for 3 or 4 seconds. You will need to manually kill the program with `ctrl + c`:
@@ -492,6 +535,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     ctrl + c
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![execute](pictures/execute.png)
+
+    </details>
+    
 &nbsp;
 
 10. Time to look at `/etc/passwd` and see if it worked! If it did, your user should now have a UID of 0000 and if you logout/login and switch (`su`) to that user, and run `whoami` you should now be root!
@@ -506,6 +555,12 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     whoami
     ```
 
+     <details><summary>Toggle for Screenshot</summary>
+    
+    ![proof](pictures/proof.png)
+
+    </details>
+    
 <br>
 
 **Congratulations, you have successfully elevated your priviledges with DirtyCOW!**
