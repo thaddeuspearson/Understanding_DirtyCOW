@@ -73,9 +73,9 @@ The best way to understand what is happening with a vulnerability is to actually
 
     - Boot up your new VM and install Ubuntu as prompted.
 
-    - If you want to be able to resize your screen or copy/paste, you will need to install the guest additions. This is a nice [walkthrough](https://www.youtube.com/watch?v=qNecdUsuTPw) on how to do that. Power off your VM for this to take effect. Also, before you restart, you should enable copy and paste in the VM settings while it is shut down.  Simply go to ettings -> General -> Advanced and set both drop down boxes to `bidirectional`. Now you can restart your VM and it should be ready.
+    - If you want to be able to resize your screen or copy/paste, you will need to install the guest additions. This is a nice [walkthrough](https://www.youtube.com/watch?v=qNecdUsuTPw) on how to do that. Power off your VM for this to take effect. Also, before you restart, you should enable copy and paste in the VM settings while it is shut down.  Simply go to `Settings` -> `General` -> `Advanced` and set both drop down boxes to `bidirectional`. Now you can restart your VM and it should be ready.
 
-    - Finally, Once the VM boots back up, disable the automatic updates by going to System Settings -> Software & Updates -> Updates, and change the drop down menu for "When there are security updates" from "Download and Install Immediately" to "Display Immediately".  Make sure you don't accidentially update the VM! You can now re-enable the network adapter if you wish *(If you enabled copy/paste, you can just leave it disconnected from the internet)*
+    - Finally, Once the VM boots back up, disable the automatic updates by going to `System Settings` -> `Software & Updates` -> `Updates`, and change the drop down menu for "When there are security updates" from `Download and Install Immediately` to `Display Immediately`.  Make sure you don't accidentially update the VM! You can now re-enable the network adapter if you wish *(If you enabled copy/paste, you can just leave it disconnected from the internet)*
 
 &nbsp;
 
@@ -87,7 +87,7 @@ The best way to understand what is happening with a vulnerability is to actually
 
 &nbsp;
 
-You now have all you need to run the dirtyCOW exploit! We will get to it, right after we examine the exploit script in detail to understand what is actually occuring.
+**You now have all you need to run the DirtyCOW exploit! We will get to it, right after we examine the exploit script in detail to understand what is actually occuring.**
 
 <br>
 
@@ -177,11 +177,15 @@ int main()
 }
 ```
 
+<br>
+
 You will need to edit this script in order to get it ready to attack `/etc/passwd` and overwrite the UID of the user you choose to elevate to root. But before we do this let's take a high level view at what this script is doing so we can better understand the dirtyCOW vulnerability.
 
 <br>
 
 ### Import Statements
+
+<br>
 
 ```c
 #include <stdio.h>
@@ -194,7 +198,7 @@ You will need to edit this script in order to get it ready to attack `/etc/passw
 #include <sys/mman.h>
 ```
 
-This section of code is bringing in necessary modules to allow out script to work. Nothing super special here.
+**This section of code is bringing in necessary modules to allow out script to work. Nothing super special here.**
 
 <br>
 
@@ -215,7 +219,7 @@ This section of code is bringing in necessary modules to allow out script to wor
 #define TARGET_OFFSET 5
 ```
 
-**This is the section you will need to modify in the script in order to accomplish a successful dirtyCOW exploit.**
+**This is the section you will need to modify in the script in order to accomplish a successful DirtyCOW exploit.**
 
 <br>
 
@@ -281,6 +285,7 @@ void *write_helper(void *vargp)
 
 - `write_helper(void *vargp)` ia a helper function that will run over and over again and attempt to write the content we wish to write to the read-only file we specified in `TARGET_FILENAME`. It will first get the file descriptor for the memory address of our own process, which contains a newly mapped location to the file we would like to write to.
 
+<br>
 
 ### Main Function
 
@@ -312,7 +317,7 @@ int main()
 
 <br>
 
-In this main function, all of the necessary steps to complete a successful dirtyCOW attack will be called. We will need to disect this line by line to get a full understanding of how this script is actually working under the hood.
+**In this main function, all of the necessary steps to complete a successful DirtyCOW attack will be called. We will need to disect this line by line to get a full understanding of how this script is actually working under the hood.**
 
 <br>
 
@@ -356,7 +361,11 @@ pthread_create(&madvise_thr, NULL, madvise_helper, NULL);
 
 - The `madvise_thr` is letting the Kernel know that we no longer need the `memory_map` we created in the step above, and that it may release the memory whenever it wishes to
 
+<br>
+
 **THIS IS WHERE THE DIRTY COPY ON WRITE ACTIALLY OCCURS**
+
+<br>
 
 - The `write()` function is considered to not be an atomic system call.  That is, the entire `write()` functon **DOES NOT** have to complete on a resource before another thread can acces that same resource. That means it could theoretically, write some data, a context switch on the CPU could occur, another thread could access that SAME partially written-to data, and then context switch back into the `write()` code block to finish out the operation. *This is a terrible programming practice.*  Anytime a write operation occurs, it should be considered **atomic** and that write operation should run to completion before another thread can access the data it was writing to.
 
@@ -496,4 +505,4 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
 
 <br>
 
-Congratulations, you have successfully elevated your priviledges with DirtyCOW!
+**Congratulations, you have successfully elevated your priviledges with DirtyCOW!**
