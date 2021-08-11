@@ -490,7 +490,7 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
 10. Time to look at `/etc/passwd` and see if it worked! If it did, your user should now have a UID of 0000 and if you logout/login and switch (`su`) to that user, and run `whoami` you should now be root!
 
     ```
-    cat /etc/passwd
+    tail -n 1 /etc/passwd
 
     su userx
 
