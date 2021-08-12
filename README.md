@@ -326,7 +326,7 @@ int main() {
 
 <br>
 
-- First, we need to open up the read-only file that we specified in `TARGET_FILENAME`. the `open()` method opens the file in read-only mode, which is the only think the Linux Kernel would allow.
+- First, we need to open up the read-only file that we specified in `TARGET_FILENAME`. The `open()` method opens the file in read-only mode, which is the only thing the Linux Kernel should allow.
 
 ![open](pictures/DirtyCOW_1.png)
 
@@ -342,6 +342,8 @@ int main() {
 <br>
 
 - Here is where we are mapping the open file to a memory location. The `mmap()` method is creating a private mapping that we will soon attempt to write into. Something worth noting at this point is that this location has been opened in "read-only" mode. We will attempt to circumvent this in a moment.
+
+![mmap](pictures/DirtyCOW_2.png)
 
 <br>
 
