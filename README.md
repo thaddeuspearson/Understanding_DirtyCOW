@@ -373,11 +373,21 @@ pthread_create(&madvise_thr, NULL, madvise_helper, NULL);
     
     1. The `write_thr` creates a private copy of the `TARGET_FILENAME`, since it cannot write to the `TARGET_FILENAME` because it was opened in read-only mode. This is called **copy-on-write** which is where the COW in DirtyCOW comes from! The pointer located in virtual memory now points to a new copy of `TARGET_FILENAME` in physical memory, instead the original physical memory address `TARGET_FILENAME`.
 
+![copy](pictures/DirtyCOW_3.png)
+
+<br>
+
     2. Before the actual `write()` method is called at this point, a context switch happens, and the `madvise_thr` begins executing, and it deallocates the private copy that was just created in physical memory, and changes the pointer located in virtual memory to now point back at the `TARGET_FILENAME`'s original physical memory address instead.
+    
+![madvise](pictures/DirtyCOW_4.png)
 
     3. Another context switch occurs, and the `write_thr` resumes execution, calling the `write()` method on the pointer that exists in virtual memory, except that this pointer no longer points to the copy that was created and then deallocated, it points to the original memory address of the `TARGET_FILENAME`. Since the `write()` function is allowed to write to the virtual address pointer (which is now pointing to the original physical address), the write operation is allowed by the kernel, and the `TARGET_CONTENT` is successfully written to the original physical memory address of the `TARGET_FILENAME`.
+    
+![write](pictures/DirtyCOW_5.png)
 
     4. Since the original `TARGET_FILENAME` was modified (also called **dirty** in the lexicon of operating system programming), the newly written-to file will be saved on disk, preserving the effects of the attack solidly within the system.
+
+![save](pictures/DirtyCOW_6.png)
 
 <br>
 
