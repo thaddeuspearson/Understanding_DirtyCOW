@@ -5,7 +5,7 @@ A resource for novice security researchers to learn about the DirtyCOW vulnerabi
 
 ## What is DirtyCOW?
 
-Dirty Copy-On-Write (COW) is a vulnerability affecting Linux Kernel Versions 2.6.22 - 4.8.3. It was initially found be security researcher Phil Oester. It's official name is CVE-2016-5195 and it is rated a CVSS base score of 7.8, which is categorized as high. With this vulnerability, it is possible for an attacker to escalate their priviledge via a race condition due to a problem in the way the Linux Kernel handles memory-management. 
+Dirty Copy-On-Write (COW) is a vulnerability affecting Linux Kernel Versions 2.6.22 - 4.8.3. It was initially found be security researcher Phil Oester. It's official name is CVE-2016-5195 and it is rated a CVSS base score of 7.8, which is categorized as high. With this vulnerability, it is possible for an attacker to escalate their privilege via a race condition due to a problem in the way the Linux Kernel handles memory-management. 
 
 <br>
 
