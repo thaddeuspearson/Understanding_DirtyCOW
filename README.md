@@ -328,6 +328,8 @@ int main() {
 
 - First, we need to open up the read-only file that we specified in `TARGET_FILENAME`. the `open()` method opens the file in read-only mode, which is the only think the Linux Kernel would allow.
 
+![open](pictures/DirtyCOW_1.png)
+
 - Next, we need to get the status of the open file, so we can eventually determine the file size. This will come in handy in just a second.
 
 <br>
