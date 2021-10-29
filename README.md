@@ -505,6 +505,7 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     - for `TARGET_CONTENT`, set it to "0000"
     - for `TARGET_OFFSET`, set it to the offset you calculated in step 5. No quotes here.
 
+
     ```
     #define TARGET_FILENAME "/etc/passwd"
 
@@ -525,7 +526,7 @@ At this stage, you should have a working Ubuntu VM with the exploit code that we
     
 &nbsp;
 
-8. Time to complie the code. Using the gcc complier, you will create a new binary, called `exploit` that you will be able to execute. Make sure you are in the same directory as the exploit.c script, or provide the full filepath to be able to edit it in this way.
+8. Time to compile the code. Using the gcc complier, you will create a new binary, called `exploit` that you will be able to execute. Make sure you are in the same directory as the exploit.c script, or provide the full filepath to be able to edit it in this way.
 
     ```
     gcc -o exploit exploit.c -lpthread
