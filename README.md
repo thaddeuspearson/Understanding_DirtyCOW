@@ -11,7 +11,7 @@ Dirty Copy-On-Write (COW) is a vulnerability affecting Linux Kernel Versions 2.6
 
 ## What is a Race Condition?
 
-A race condition occurs when two or more threads can access the same shared data and then try to change it that data at the same time, and unexpected results occur. As an example, consider two ATM machines. Both have access to the same bank account, and both can be accessed independently. If two people were to access the same bank account at the same exact time, and both withdrew $100, the bank account should treat both of these transactions as separate and reduce the balance of the bank acount by $200. However, if the memory is not being managed appropriately, it is theoretically possible that if both withdrawals happened at the same exact time, the bank account may only register one transaction, giving the people a free $100 bill.
+A race condition occurs when two or more threads can access the same shared data and then try to change that data at the same time, and unexpected results occur. As an example, consider two ATM machines. Both have access to the same bank account, and both can be accessed independently. If two people were to access the same bank account at the same exact time, and both withdrew $100, the bank account should treat both of these transactions as separate and reduce the balance of the bank acount by $200. However, if the memory is not being managed appropriately, it is theoretically possible that if both withdrawals happened at the same exact time, the bank account may only register one transaction, giving the people a free $100 bill.
 
 <br>
 
@@ -65,7 +65,7 @@ The best way to understand what is happening with a vulnerability is to actually
     
     &nbsp;
 
-    - You will need to give your new VM enough memory, and that will depend on how much RAM your host machine has. I gave mine 4096MB, but 2048 should worked well enough. *(If you find your VM behaving very slowly later, you can always bump this up later)*
+    - You will need to give your new VM enough memory, and that will depend on how much RAM your host machine has. I gave mine 4096MB, but 2048 should worked well enough. *(If you find your VM behaving very slowly, you can always bump this up later)*
     
     - When you get to the step to `Choose a virtual CD/DVD disk file`, you will need to select the ISO file you downloaded in step 1. 
  
@@ -355,7 +355,7 @@ pthread_create(&madvise_thr, NULL, madvise_helper, NULL);
 
 <br>
 
-- This is where the magic is happening. Since both helper functions are infinate while loops, both of these threads will continue to run until the script is killed by the user. *(This will make sense when we are actually executing the attack)*
+- This is where the magic is happening. Since both helper functions are infinite while loops, both of these threads will continue to run until the script is killed by the user. *(This will make sense when we are actually executing the attack)*
 
 - The `write_thr` is attempting to write the string we specified in `TARGET_CONTENT` at the specified location within the file we specified in `TARGET_FILENAME`. Since the file that we opened has been specifically opened in read-only mode, we are going to write to a copy that is created for us in a new memory location, not the original file itself.
 
@@ -371,7 +371,7 @@ pthread_create(&madvise_thr, NULL, madvise_helper, NULL);
 
 - Since we are repeatedly calling the `write()` method in the `write_thr` while simultaneously calling `madvise()` in the `madvise_thr` if the right set of operations occur, then:
     
-- The `write_thr` creates a private copy of the `TARGET_FILENAME`, since it cannot write to the `TARGET_FILENAME` because it was opened in read-only mode. This is called **copy-on-write** which is where the COW in DirtyCOW comes from! The pointer located in virtual memory now points to a new copy of `TARGET_FILENAME` in physical memory, instead the original physical memory address `TARGET_FILENAME`.
+- The `write_thr` creates a private copy of the `TARGET_FILENAME`, since it cannot write to the `TARGET_FILENAME` because it was opened in read-only mode. This is called **copy-on-write** which is where the COW in DirtyCOW comes from! The pointer located in virtual memory now points to a new copy of `TARGET_FILENAME` in physical memory, instead of the original physical memory address `TARGET_FILENAME`.
 
 ![copy](pictures/DirtyCOW_3.png)
 
